@@ -1,0 +1,13 @@
+#!/bin/sh
+openbsd() {
+	[ "$1" = "-f" ] && printf "$(sysctl | grep hw.sensors.cpu0.temp0 | sed 's/.*=//' | sed 's/\.00//' | sed 's/ deg/°/')°C" || sysctl | grep hw.sensors.cpu0.temp0 | sed 's/.*=//' | sed 's/\.00//' | sed 's/ deg/°/'
+}
+
+linux () {
+	cat /sys/class/thermal/thermal_zone*/temp | awk '{print $1/1000}'
+}
+
+case $(uname) in
+	OpenBSD) openbsd ;;
+	Linux) linux ;;
+esac
