@@ -4,7 +4,7 @@
 # basically everything that has df -P
 df -P | awk '
 	function convert(n) {
-		split("K M G T P E Z Y", unit, " ")
+		split("K M G T P", unit, " ")
 		i = 1
 		while (n >= 1024 && i < length(unit)) {
 			n = n / 1024
