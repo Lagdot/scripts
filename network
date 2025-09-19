@@ -1,0 +1,2 @@
+#!/bin/sh
+ifconfig | grep ".*inet.*netmask" | tail -n 1 | sed 's/inet //g' | sed 's/ netmask.*//g' | sed 's/   //g' | sed 's/ //g' | sed 's/   //g'

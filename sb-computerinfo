@@ -1,0 +1,2 @@
+#!/bin/sh
+echo -n { $(echo CPU: $(cpuusage) && echo Temp: $(cputemp)°C && echo Mem: $(memory) ) }

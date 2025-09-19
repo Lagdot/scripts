@@ -1,0 +1,19 @@
+#!/bin/sh
+openbsd() {
+    TOTAL="$(sysctl -n hw.physmem | awk '{ printf "%.1fG\n", $1 / 1024 / 1024 / 1024 }')"
+    MUSED="$(top -b -n 1 | grep -o 'Real.*' | sed 's/Real: //' | sed 's/\/.*//')"
+    printf "$MUSED" | grep -E "[0-9]{4}" > /dev/null && FUSED="$(printf "$MUSED" | cut -c -2 | sed 's/./.&/2')G" || FUSED=$MUSED
+    printf "$FUSED/$TOTAL\n"
+}
+
+linux() {
+	TOTAL="$(free -h | awk '/^Mem:/ {print $2}')"
+	MUSED="$(free -h | awk '/^Mem:/ {print $3}')"
+	printf "$MUSED" | grep -E "[0-9]{4}" > /dev/null && FUSED="$(printf "$MUSED" | cut -c -2 | sed 's/./.&/2')G" || FUSED=$MUSED
+	printf "$FUSED/$TOTAL\n" | sed 's/Gi/G/g' | sed 's/Mi/M/g'
+}
+
+case $(uname) in
+	OpenBSD) openbsd ;;
+	Linux) linux ;;
+esac

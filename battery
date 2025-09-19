@@ -1,0 +1,15 @@
+#!/bin/sh
+bsd() {
+	PERCENT="$(apm | grep -o '[0-9].*%' | head -n 1)"
+	[ "$PERCENT" = "" ] && printf "None" && exit
+	echo "$PERCENT"
+}
+
+linux() {
+	echo $(cat /sys/class/power_supply/BAT0/capacity)%
+}
+
+case $(uname) in
+	*BSD) bsd ;;
+	Linux) linux ;;
+esac

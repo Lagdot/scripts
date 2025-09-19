@@ -1,0 +1,6 @@
+#!/bin/sh
+ffmpeg -f x11grab -i :0.0 -vframes 1 /tmp/tempvideo.mp4 > /dev/null 2>&1 &
+sleep 1
+ffmpeg -y -i /tmp/tempvideo.mp4 -vframes 1 screenshot.png > /dev/null 2>&1
+
+rm -rf /tmp/tempvideo.mp4

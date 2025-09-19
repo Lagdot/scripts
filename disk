@@ -1,0 +1,23 @@
+#!/bin/sh
+# theres probably a way easier way to do this but I want it to be pretty much unix-like universal
+# this should run on Linux, FreeBSD, OpenBSD, NetBSD, macOS and Solaris
+# basically everything that has df -P
+df -P | awk '
+	function convert(n) {
+		split("K M G T P", unit, " ")
+		i = 1
+		while (n >= 1024 && i < length(unit)) {
+			n = n / 1024
+			i++
+		}
+		return sprintf("%.1f%s", n, unit[i])
+	}
+	$6=="/" || $6=="/home" || $6=="/tmp" || $6 ~ /^\/usr/ || $6=="/var" {
+		used += $3
+		total += $2
+	}
+	
+	END {
+    	print convert(used) "/" convert(total)
+	}
+'
