@@ -1,0 +1,2 @@
+#!/bin/sh
+ffplay -window_title webcam -fast "/dev/$(ls /dev | grep video | dmenu)"
