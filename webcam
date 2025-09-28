@@ -1,3 +1,2 @@
 #!/bin/sh
-
 ffplay -window_title webcam -fast /dev/video0
