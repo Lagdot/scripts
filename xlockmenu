@@ -1,0 +1,2 @@
+#!/bin/sh
+xlock -mode $(cat $HOME/.local/share/xlocklist | dmenu -i -l 30 -p mode? | awk '{print $1}')

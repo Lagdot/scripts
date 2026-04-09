@@ -1,2 +1,2 @@
 #!/bin/sh
-echo -n { $(echo CPU: $(cpuusage) && echo Temp: $(cputemp) && echo Mem: $(memory) ) }
+echo -n { $(echo cpu: $(cpuusage) && echo temp: $(cputemp) && echo mem: $(memory) ) }
